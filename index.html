@@ -1,118 +1,130 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>YouTube Video Editor — 2015 Recreation</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YouTube Video Editor — 2015 Recreation</title>
+<link rel="stylesheet" href="css/editor.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="top-left">
-      <button class="hamburger" aria-label="Menu">☰</button>
-      <div class="youtube-wordmark"><span class="yt-icon">▶</span><span>YouTube</span></div>
-    </div>
-    <div class="search-wrap">
-      <input id="globalSearch" type="text" placeholder="">
-      <button class="search-btn">⌕</button>
-    </div>
-    <button class="upload">Upload</button>
-  </header>
+<header class="topbar">
+  <div class="brand-area"><button class="hamburger">☰</button><div class="brand"><b>▶</b> YouTube</div></div>
+  <div class="global-search"><input><button>⌕</button></div>
+  <button class="upload-btn">Upload</button>
+</header>
 
-  <div class="shell">
-    <aside class="sidebar">
-      <div class="creator-title">CREATOR STUDIO</div>
-      <nav>
-        <button>▦ <span>DASHBOARD</span></button>
-        <button>▣ <span>VIDEO MANAGER</span><b>⌄</b></button>
-        <button>◉ <span>LIVE STREAMING</span><b>⌄</b></button>
-        <button>♟ <span>COMMUNITY</span><b>⌄</b></button>
-        <button>● <span>CHANNEL</span></button>
-        <button>▥ <span>ANALYTICS</span><b>⌄</b></button>
-        <div class="create-label">CREATE</div>
-        <button class="sub">Audio Library</button>
-        <button class="sub active">Video Editor</button>
-      </nav>
-      <button class="feedback">Send feedback</button>
-    </aside>
+<div class="app">
+  <aside class="sidebar">
+    <div class="creator">CREATOR STUDIO</div>
+    <button>▦ <span>DASHBOARD</span></button>
+    <button>▣ <span>VIDEO MANAGER</span><i>⌄</i></button>
+    <button>◉ <span>LIVE STREAMING</span><i>⌄</i></button>
+    <button>♟ <span>COMMUNITY</span><i>⌄</i></button>
+    <button>● <span>CHANNEL</span></button>
+    <button>▥ <span>ANALYTICS</span><i>⌄</i></button>
+    <div class="create">CREATE</div>
+    <button class="sub">Audio Library</button>
+    <button class="sub active">Video Editor</button>
+    <button class="feedback">Send feedback</button>
+  </aside>
 
-    <main class="workspace">
-      <div class="projectbar">
-        <button class="back">←</button>
-        <button class="project-select">Project <span>⌄</span></button>
-        <input id="projectName" value="My Edited Video">
-        <span class="saved">All changes saved.</span>
-        <button class="create-video">Create video</button>
+  <main class="main">
+    <div class="projectbar">
+      <button id="backBtn" class="small">←</button>
+      <button class="project-menu">Project <span>⌄</span></button>
+      <input id="projectName" value="My Edited Video">
+      <span id="saveState">All changes saved.</span>
+      <div class="project-actions">
+        <button id="newBtn">New</button><button id="saveBtn">Save</button><button id="loadBtn">Load</button>
+        <button id="createBtn" class="create-video">Create video</button>
+      </div>
+    </div>
+
+    <section class="editor">
+      <div class="preview-card">
+        <div class="preview">
+          <video id="previewVideo" playsinline></video><video id="transitionVideo" class="transition-video" playsinline muted></video><div id="transitionFallback" class="transition-fallback"></div>
+          <div id="titleOverlay" class="title-overlay"></div>
+          <div class="preview-empty">Add a video clip to preview it</div>
+          <div class="player">
+            <button id="playBtn">▶</button><button id="muteBtn">🔊</button>
+            <span id="clock">0:00 / 0:00</span>
+            <input id="scrubber" type="range" min="0" max="1000" value="0">
+          </div>
+        </div>
       </div>
 
-      <section class="editor">
-        <div class="preview">
-          <div class="preview-screen">
-            <div class="fake-browser">
-              <div class="mini-browserbar"></div>
-              <div class="fake-page">
-                <div class="fake-card"></div>
-                <div class="fake-pink"></div>
-                <div class="fake-lines"></div>
-              </div>
-            </div>
-            <div class="playerbar">
-              <span>▶</span><span>🔊</span><span id="timeLabel">0:03 / 12:45</span>
-              <div class="player-progress"><i id="previewProgress"></i></div>
-            </div>
-          </div>
-        </div>
+      <div class="tool-tabs">
+        <button class="tool active" data-panel="media">▣</button>
+        <button class="tool" data-panel="transitions">◉</button>
+        <button class="tool" data-panel="photos">▣</button>
+        <button class="tool" data-panel="audio">♪</button>
+        <button class="tool" data-panel="effects">◀▶</button>
+        <button class="tool" data-panel="text">a</button>
+        <button class="tool" data-panel="help">?</button>
+      </div>
 
-        <div class="tool-tabs">
-          <button class="tool active" data-panel="media">▣</button>
-          <button class="tool" data-panel="transitions">◉</button>
-          <button class="tool" data-panel="photos">▣</button>
-          <button class="tool" data-panel="audio">♪</button>
-          <button class="tool">◀▶</button>
-          <button class="tool">a</button>
-          <button class="tool">?</button>
-        </div>
+      <div class="asset-panel">
+        <div class="asset-search"><input id="assetSearch" placeholder="Search Creative Commons videos"><span>⌕</span></div>
+        <div id="panelContent"></div>
+      </div>
 
-        <div class="asset-panel" id="assetPanel">
-          <div class="asset-search"><input id="assetSearch" placeholder="Search Creative Commons videos"><span>⌕</span></div>
-          <div id="panelContent"></div>
+      <div class="timeline-wrap">
+        <div class="timeline-toolbar">
+          <div class="track-icon">▰</div><div class="track-icon">♪</div>
         </div>
-
-        <div class="timeline-wrap">
-          <div class="timeline-tools">
-            <div class="track-head video-head">▰</div>
-            <div class="track-head audio-head">♪</div>
-          </div>
-          <div class="timeline" id="timeline">
-            <div class="ruler">
-              <span style="left:0%">0:03</span><span style="left:25%">1:22</span><span style="left:36%">1:57</span>
-              <span style="left:56%">4:31</span><span style="left:69%">6:01</span><span style="left:89%">12:06</span><span style="left:100%">12:45</span>
-            </div>
-            <div class="video-track" id="videoTrack">
-              <div class="clip clip-a" data-duration="79"><span>1:22</span></div>
-              <div class="clip clip-b" data-duration="35"><span>0:35</span></div>
-              <div class="clip clip-c" data-duration="154"><span>2:33</span></div>
-              <div class="clip clip-d" data-duration="90"><span>1:29</span></div>
-              <div class="clip clip-e" data-duration="365"><span>6:04</span></div>
-              <div class="clip clip-f" data-duration="39"><span>0:39</span></div>
-              <div class="empty-slot"></div>
-            </div>
-            <div class="audio-track">Drag audio here</div>
-            <div class="playhead" id="playhead"><div class="handle"></div><div class="line"></div><span>0:03</span></div>
-            <div class="zoom">⌕ ─────</div>
-          </div>
+        <div class="timeline" id="timeline">
+          <div class="ruler" id="ruler"></div>
+          <div class="clip-track" id="clipTrack"></div>
+          <div class="audio-track" id="audioTrack">Drag audio here</div>
+          <div class="text-track" id="textTrack"></div>
+          <div class="playhead" id="playhead"><span>0:00</span><b></b></div>
+          <div class="zoom-controls"><button id="zoomOut">−</button><input id="zoom" type="range" min="50" max="180" value="100"><button id="zoomIn">+</button></div>
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
 
-  <div class="transition-modal" id="transitionModal">
-    <div class="transition-dialog">
-      <div class="dialog-head">Choose a transition <button id="closeModal">×</button></div>
-      <div class="transition-grid" id="transitionGrid"></div>
+      <div class="edit-toolbar">
+        <button id="trimLeft">Trim left</button><button id="trimRight">Trim right</button>
+        <button id="splitBtn">Split</button><button id="deleteBtn">Delete</button>
+        <span class="divider"></span>
+        <button id="addTextBtn">Add text</button><button id="transitionBtn">Transition</button><button id="transitionManagerBtn">Transition manager</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<input id="mediaInput" type="file" accept="video/*,image/*" multiple hidden>
+<input id="audioInput" type="file" accept="audio/*" multiple hidden>
+<input id="projectInput" type="file" accept=".json,application/json" hidden>
+
+<div class="modal" id="transitionModal">
+  <div class="dialog">
+    <div class="dialog-title">Transition manager <button id="closeTransition">×</button></div>
+    <div class="transition-help">Select a transition for the cut after the selected clip. Set its duration, preview it, or remove it. Durations are limited by the neighboring clips.</div>
+    <div class="transition-settings">
+      <label>Duration <input id="transitionDuration" type="number" min="0.1" max="10" step="0.1" value="1.0"> <span>seconds</span></label>
+      <button id="previewTransition">Preview</button>
+      <button id="clearTransition">Remove transition</button>
     </div>
+    <input id="transitionSearch" placeholder="Search transitions">
+    <div id="transitionGrid" class="transition-grid"></div>
   </div>
+</div>
 
-  <script src="app.js"></script>
+<div class="modal" id="textModal">
+  <div class="dialog small-dialog">
+    <div class="dialog-title">Add text <button id="closeText">×</button></div>
+    <label>Text<input id="textValue" value="My title"></label>
+    <label>Size<input id="textSize" type="number" value="32" min="10" max="120"></label>
+    <button id="insertText" class="create-video">Add to video</button>
+  </div>
+</div>
+
+<script src="js/state.js"></script>
+<script src="js/media.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/transitions.js"></script>
+<script src="js/project.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

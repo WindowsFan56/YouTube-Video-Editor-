@@ -1,26 +1,26 @@
-# 2015 YouTube Video Editor recreation
+# YouTube Video Editor — 2015 Recreation v2
 
-This is a self-contained HTML/CSS/JS recreation based on the supplied 2015 screenshot.
+This version folds the editor UI and editing workflow into one organized project.
 
-## Run
-Open `index.html` in a browser. No server or dependencies are required.
+## Features
+1. Closer 2015 Creator Studio UI
+2. Drag/reorder timeline clips
+3. Trim left/right and split selected clips
+4. Transition library with the 48 transition names from the supplied OYTVE archive
+5. Functional HTML5 video preview/playback
+6. Audio import and audio-track display
+7. Video/image importing
+8. Drag-and-drop media into the editor
+9. Save/load project JSON
+10. Title/text overlay tool
+11. Timeline zoom
+12. Desktop-first 2015 layout
+13. Separate HTML/CSS/JS modules
 
-## Included
-- 2015-style Creator Studio sidebar
-- YouTube-style top navigation and project bar
-- Preview/player area
-- Creative Commons asset panel
-- Timeline with clips, ruler and draggable playhead
-- Transition chooser
-- Responsive styling
+## Original transition files
+`transitions/OYTVE_Transitions_Original.rar` contains the original supplied archive.
 
-## Transition archive note
-The uploaded file named `OYTVE Transtions [2026 Update].zip` is detected as a **RAR v5 archive despite the `.zip` filename**. The current environment could not extract that archive, so this prototype uses CSS transition previews rather than silently pretending the supplied transition files were imported.
+The uploaded `.zip` is actually a RAR5 file. Browsers cannot directly use RAR media as transition assets, so the project includes `tools/extract_transitions.py`. After extracting the archive into `transitions/assets/`, the transition records already stored by the editor point at those original filenames.
 
-If you provide the transitions as a real ZIP (or extract the RAR and upload the extracted files), they can be wired into the transition chooser.
-
-
-## Transition assets
-The package now includes the **original user-supplied transition archive** under `transitions/OYTVE_Transitions_Original.rar` plus `transitions/manifest.json`, and the transition chooser contains all named transition assets from that archive.
-
-The archive is RAR5 even though its filename ends in `.zip`. Because the current runtime cannot extract RAR5 media, the prototype keeps the original archive intact and uses lightweight CSS previews in the browser. This avoids altering or losing the supplied media.
+## Important
+This is a local browser recreation, not a connection to YouTube's historical editor. The Create Video button is intentionally a local prototype action.
